@@ -2,7 +2,7 @@
 class Login extends ViewModel{
 	public $accounts;
 	function __construct(){
-		$this->accounts = $this->getModel('Account');
+		$this->accounts = $this->getModel('AccountDAL');
 	}
 	public function Index(){
 		$this->loadView('Login','Index');
@@ -47,9 +47,27 @@ class Login extends ViewModel{
 		if (isset($_POST['login-btn'])) {
 			$userName = $_POST['login-username'];
 			$passWord = $_POST['login-password'];
-			if (password_verify($passWord, $this->accounts->checkLogin($userName))) {
-				$_SESSION['USER_SESSION'] = $userName;
-				header('Location:'.BASE_URL);
+			$checkLoginJSON = json_decode($this->accounts->checkLogin($userName),true);
+			if ($checkLoginJSON['Status']!=-1){
+				if ($checkLoginJSON['Status']!=1){
+					$this->loadView('Login','Index',[
+						'message' => 'This account is not activated :D',
+						'type' => 'error'
+					]);
+				}
+				else{
+					if (password_verify($passWord,$checkLoginJSON['PassWord'])) {
+						$_SESSION['USER_SESSION'] = $userName;
+						$_SESSION['USER_TYPE_SESSION'] = json_decode($this->accounts->getTypeByName($userName));
+						header('Location:'.BASE_URL);
+					}
+					else{
+						$this->loadView('Login','Index',[
+							'message' => 'Username or Passwords is incorrect :D',
+							'type' => 'error'
+						]);
+					}
+				}
 			}
 			else{
 				$this->loadView('Login','Index',[

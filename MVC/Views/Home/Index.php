@@ -30,168 +30,29 @@
 					Hot Product
 					<span></span>
 				</h5>
-				<div class="product-card">
-					<label class="hot">HOT</label>
-					<div class="image-move move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart
-								</button>
+				<?php foreach ($model['listHot'] as $item): ?>
+					<div class="product-card">
+						<label class="hot">HOT</label>
+						<div class="image-move move">
+							<img src="<?php echo IMAGE_URL.'/'.$item['Image']; ?>" alt="">
+						</div>
+						<div class="image-card">
+							<a href="<?php echo BASE_URL.'Product/Detail/'.$item['ID']; ?>"><img src="<?php echo IMAGE_URL.'/'.$item['Image']; ?>" alt=""></a>
+						</div>
+						<div class="content-card">
+							<h5><?php echo $item['ProductName']; ?></h5>
+							<h6>Price: <?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
+							<div class="btn-content-card">
+								<a class="view-card" href="<?php echo BASE_URL.'Product/Detail/'.$item['ID']; ?>">View</a>
+								<div class="hover-card">
+									<i class="fas fa-cart-arrow-down"></i>
+									<button style="width: 100%" class="add-cart-card">Add Cart
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="product-card">
-					<label class="hot">HOT</label>
-					<div class="image-move move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="hot">HOT</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="hot">HOT</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="hot">HOT</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="hot">HOT</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="hot">HOT</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="hot">HOT</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
+				<?php endforeach; ?>
 				<a href="#" style="text-decoration: none;display:block;"> View more <i class="fas fa-angle-double-right"></i></a>
 				<!-- hot-products end -->
 
@@ -200,166 +61,29 @@
 					New Product
 					<span></span>
 				</h5>
-				<div class="product-card">
-					<label class="new">NEW</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
+				<?php foreach ($model['listNew'] as $item): ?>
+					<div class="product-card">
+						<label class="new">NEW</label>
+						<div class="image-move move">
+							<img src="<?php echo IMAGE_URL.'/'.$item['Image']; ?>" alt="">
+						</div>
+						<div class="image-card">
+							<a href="<?php echo BASE_URL.'Product/Detail/'.$item['ID']; ?>"><img src="<?php echo IMAGE_URL.'/'.$item['Image']; ?>" alt=""></a>
+						</div>
+						<div class="content-card">
+							<h5><?php echo $item['ProductName']; ?></h5>
+							<h6>Price: <?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
+							<div class="btn-content-card">
+								<a class="view-card" href="<?php echo BASE_URL.'Product/Detail/'.$item['ID']; ?>">View</a>
+								<div class="hover-card">
+									<i class="fas fa-cart-arrow-down"></i>
+									<button style="width: 100%" class="add-cart-card">Add Cart
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="product-card">
-					<label class="new">NEW</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="new">NEW</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="new">NEW</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="new">NEW</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="new">NEW</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="new">NEW</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="product-card">
-					<label class="new">NEW</label>
-					<div id="move" class="image-move">
-						<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-					</div>
-					<div class="image-card">
-						<a href="#"><img src="<?php echo IMAGE_URL; ?>/phone1.png" alt=""></a>
-					</div>
-					<div class="content-card">
-						<h5>Name</h5>
-						<h6>Price: 20.000</h6>
-						<div class="btn-content-card">
-							<a class="view-card" href="#">View</a>
-							<div class="hover-card">
-								<i class="fas fa-cart-arrow-down"></i>
-								<button style="width: 100%" class="add-cart-card">Add Cart</button>
-							</div>
-						</div>
-					</div>
-				</div>
+				<?php endforeach; ?>
 				<a href="#" style="text-decoration: none;display:block;"> View more <i class="fas fa-angle-double-right"></i></a>
 				<!-- new-products end -->
 

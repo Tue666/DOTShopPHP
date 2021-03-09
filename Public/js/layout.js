@@ -1,5 +1,49 @@
 /* js layout start */
 
+	/* change quantity*/
+	$('#plus').click(function(){
+		maxCount = parseInt(document.getElementById('quantity-left').innerHTML);
+		var valueCount = parseInt(document.getElementById('quantity').value);
+		valueCount++;
+		document.getElementById('quantity').value = valueCount;
+		if (valueCount == maxCount) {
+			$('#plus').addClass('disable');
+		}
+		if (valueCount > 1){
+			$('#sub').removeClass('disable');
+		}
+	});
+	$('#sub').click(function(){
+		maxCount = parseInt(document.getElementById('quantity-left').innerHTML);
+		var valueCount = parseInt(document.getElementById('quantity').value);
+		valueCount--;
+		document.getElementById('quantity').value = valueCount;
+		if (valueCount == 1){
+			$('#sub').addClass('disable');
+		}
+		if (valueCount < maxCount) {
+			$('#plus').removeClass('disable');
+		}
+	});
+	
+	/* change active description menu */
+	$('.description-tabs .description-tab-item').click(function(){
+		$(this).addClass('active').siblings().removeClass('active');
+	});
+
+	/* function move description menu */
+	function move(index){
+		if (index==1){
+			$('.description-slides .newFirst').css('margin-left','0');
+		}
+		else if (index==2){
+			$('.description-slides .newFirst').css('margin-left','-34%');
+		}
+		else {
+			$('.description-slides .newFirst').css('margin-left','-68%');
+		}
+	};
+
 	/* load product category */
 	$('.product-navigation li').click(function(){
 		const value = $(this).attr('data-filter');
@@ -7,8 +51,8 @@
 			$('.product-card').show(1000);
 		}
 		else{
-			$('.product-card').not('.'+value).hide('500');
-			$('.product-card').filter('.'+value).show('500');
+			$('.product-card').not('.'+value).hide('1000');
+			$('.product-card').filter('.'+value).show('1000');
 		}
 	});
 
@@ -19,7 +63,7 @@
 	
 	/* move image card */
 	$('.add-cart-card').click(function(){
-		$(this).parent().parent().parent().prev().prev().css({'top':'73%','right':'9%','width':'0%','height':'0%','zIndex':'1000','transition':'1s','opacity':'0'});
+		$(this).parent().parent().parent().prev().prev().css({'top':'73%','right':'9%','width':'0%','height':'0%','zIndex':'1000','transition':'1s','opacity':'1'});
 		$.post('./Ajax/getSession',function(response){
 			//$('.add-cart-card').parent().parent().parent().prev().prev().css({'top':'73%','right':'9%','width':'0%','height':'0%','zIndex':'1000','transition':'1s'});
 			if (response){
@@ -32,7 +76,7 @@
 		});
 	});
 	$('.add-cart-card').mouseout(function(){
-		$(this).parent().parent().parent().prev().prev().css({'top':'20%','right':'33%','width':'35%','height':'28%','zIndex':'0','transition':'0s','opacity':'1'});
+		$(this).parent().parent().parent().prev().prev().css({'top':'20%','right':'33%','width':'35%','height':'28%','zIndex':'0','transition':'0s','opacity':'0'});
 	});
 
 	/* toggle account */

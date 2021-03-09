@@ -5,9 +5,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Trang chủ</title>
-	<link rel="stylesheet" href="<?php echo CSS_URL; ?>">
+	<link rel="stylesheet" href="<?php echo CSS_URL; ?>/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="<?php echo CSS_URL; ?>/owl.carousel.min.css">
+	<link rel="stylesheet" href="<?php echo CSS_URL; ?>/jquery.exzoom.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -150,7 +152,7 @@
 					<span></span>
 					Contact
 				</a>
-				<?php if (!empty($_SESSION['USER_SESSION']) && $_SESSION['USER_SESSION'] == 'admin'): ?>
+				<?php if (!empty($_SESSION['USER_SESSION']) && $_SESSION['USER_TYPE_SESSION'] == 1): ?>
 					<a id="admin-menu" href="#">
 						<span></span>
 						<span></span>
@@ -204,5 +206,47 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="<?php echo JS_URL; ?>/layout.js"></script>
+	
+	<!-- owl-carousel -->
+	<script src="<?php echo JS_URL; ?>/owl.carousel.min.js"></script>
+	<script>
+		
+		$('.owl-carousel').owlCarousel({
+			autoplay: 1000,
+			autoplayHoverPause: true,
+			items: 4,
+			nav: true,
+			loop: true,
+			responsiveClass:true,
+			responsive:{
+				0:{
+					items:1,
+					nav:true
+				},
+				501:{
+					items:2,
+					nav:true
+				},
+				701:{
+					items:3,
+					nav:true
+				},
+				801:{
+					items:4,
+					nav:true
+				}
+			}
+		});
+	</script>
+
+	<!-- jquery exzoom -->
+	<script src="<?php echo JS_URL; ?>/jquery.exzoom.js"></script>
+	<script>
+		$(function(){
+			$("#exzoom").exzoom({
+				"autoPlay": false
+			});
+		});
+	</script>
 </body>
 </html>

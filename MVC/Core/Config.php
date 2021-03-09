@@ -6,7 +6,7 @@
 
 
 	define('BASE_URL','http://localhost/DOTShop/');
-	define('CSS_URL','http://localhost/DOTShop/Public/css/style.css');
+	define('CSS_URL','http://localhost/DOTShop/Public/css');
 	define('IMAGE_URL','http://localhost/DOTShop/Public/images');
 	define('JS_URL','http://localhost/DOTShop/Public/js');
 ?>
