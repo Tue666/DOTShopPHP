@@ -17,47 +17,11 @@
 	<div class="header" id="scroll-header">
 		<!-- header-top start -->
 		<div class="header-top" id="test">
-			<i class="fas fa-bell cart">
-				<div class="count-product"><label>0</label></div>
+			<i class="fas fa-bell notify">
+				<!-- <div class="count-notify"><label>0</label></div> -->
 			</i>
 			<i class="fas fa-shopping-cart cart">
-			<?php if (empty($_SESSION['USER_SESSION'])): ?>
-				<div class="show-cart">
-					<div class="cart-content">
-						<h5>Login to use this action!</h5>
-					</div>
-					<div class="cart-button" style="margin:5px">
-						<button class="btn btn-danger" onclick="location.href='<?php echo BASE_URL; ?>Login/Index';">Login / Register</button>
-					</div>
-				</div>
-			<?php else: ?>
-				<div class="count-product"><label>2</label></div>
-				<div class="show-cart">
-					<div class="cart-content">
-						<div class="cart-item">
-							<div class="item-img">
-								<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-							</div>
-							<div class="item-infor">
-								<label>Name: Product Name 1</label>
-								<label>Price: 20000</label>
-							</div>
-						</div>
-						<div class="cart-item">
-							<div class="item-img">
-								<img src="<?php echo IMAGE_URL; ?>/phone1.png" alt="">
-							</div>
-							<div class="item-infor">
-								<label>Name: Product Name 2</label>
-								<label>Price: 50000</label>
-							</div>
-						</div>
-					</div>
-					<div class="cart-button" style="margin:5px">
-						<button class="btn btn-danger">View Cart</button>
-					</div>
-				</div>
-			<?php endif; ?>
+				
 			</i>
 			<?php if (empty($_SESSION['USER_SESSION'])): ?>
 				<a href="<?php echo BASE_URL; ?>Login/Index">Login</a>
@@ -89,6 +53,13 @@
 							<span></span>
 							<span></span>
 							Change password
+						</a>
+						<a href="<?php echo BASE_URL; ?>Cart/Index">
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							My cart
 						</a>
 						<a href="#">
 							<span></span>

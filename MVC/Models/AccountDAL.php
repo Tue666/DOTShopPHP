@@ -31,5 +31,11 @@ class AccountDAL extends Database{
 		$rows = mysqli_fetch_assoc($result);
 		return json_decode(isset($rows['Type'])?$rows['Type']:0);
 	}
+	public function getIDByName($userName){
+		$query = "SELECT ID FROM account WHERE UserName = '$userName' LIMIT 1";
+		$result = mysqli_query($this->connectionString,$query);
+		$rows = mysqli_fetch_assoc($result);
+		return json_decode(isset($rows['ID'])?$rows['ID']:0);
+	}
 }
 ?>

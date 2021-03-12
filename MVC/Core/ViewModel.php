@@ -12,5 +12,9 @@ class ViewModel{
 			require_once('./MVC/Views/Shared/404.php');
 		}
 	}
+	// protected function getDTOModel($dtoModel) {
+	// 	require_once('./MVC/DTO/'.$dtoModel.'.php');
+	// 	return new $dtoModel;
+	// }
 }
 ?>

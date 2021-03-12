@@ -36,10 +36,10 @@
 							</div>
 							<div class="single-price">
 								<div class="price">
-									<?php if ($model['single']['Discound']!=0): ?>
-										<span class="new-price"><?php echo number_format(($model['single']['Price'])-($model['single']['Price']*($model['single']['Discound']/100)), 0, '', ','); ?> đ</span>
+									<?php if ($model['single']['Discount']!=0): ?>
+										<span class="new-price"><?php echo number_format(($model['single']['Price'])-($model['single']['Price']*($model['single']['Discount']/100)), 0, '', ','); ?> đ</span>
 										<div class="sale">
-											<span>-<?php echo $model['single']['Discound']; ?>%</span>
+											<span>-<?php echo $model['single']['Discount']; ?>%</span>
 											<span class="old-price"><?php echo number_format($model['single']['Price'], 0, '', ','); ?> đ</span>
 										</div>
 									<?php else: ?>
@@ -67,8 +67,10 @@
 							</div>
 						</div>
 						<div class="single-button">
-							<a class="add-card">Add to card</a>
-							<a class="buy-now">Buy now</a>
+							<?php if ($model['single']['Quantity']>0): ?>
+								<a class="add-card" onclick="addCart(<?php echo $model['single']['ID']; ?>,1,2)">Add to card</a>
+								<!-- <a class="buy-now">Buy now</a> -->
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>

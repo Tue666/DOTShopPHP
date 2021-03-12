@@ -25,10 +25,10 @@
 							<h5><?php echo $item['ProductName']; ?></h5>
 							<h6>Price: <?php echo number_format($item['Price'], 0, '', ','); ?> đ</h6>
 							<div class="btn-content-card">
-								<a class="view-card" href="<?php echo BASE_URL.'Product/Detail/'.$item['ID']; ?>">View</a>
+								<a onclick="updateView(<?php echo $item['ID'] ?>)" class="view-card" href="<?php echo BASE_URL.'Product/Detail/'.$item['ID']; ?>">View</a>
 								<div class="hover-card">
 									<i class="fas fa-cart-arrow-down"></i>
-									<button style="width: 100%" class="add-cart-card dm">Add Cart
+									<button onclick="addCart(<?php echo $item['ID']; ?>,1)" style="width: 100%" class="add-cart-card dm">Add Cart
 									</button>
 								</div>
 							</div>

@@ -1,4 +1,14 @@
 /* js layout start */
+	/* update VIEW */
+	function updateView(productID){
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/updateView',
+			method: 'post',
+			data: {
+				productID: productID
+			}
+		});
+	}
 
 	/* change quantity*/
 	$('#plus').click(function(){
@@ -56,6 +66,130 @@
 		}
 	});
 
+	/* show check out form function */
+	function showCheckOut(){
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/showCheckOut',
+			method: 'post',
+			success: function(response){
+				$('.cart-wrapper .payment').html(response);
+			}
+		});
+	}
+
+	/* hide check out form function */
+	function hideCheckOut(){
+		$('.cart-wrapper .payment').html('');
+	}
+
+	/* update quantity cart function */
+	function updateQuantity(productID,event){
+		var newQuantity = event.target.value;
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/updateQuantity',
+			method: 'post',
+			data: {
+				productID: productID,
+				newQuantity: newQuantity
+			}
+		});
+		loadCartHover();
+		loadCart();
+	}
+
+	/* load cart hover function*/
+	loadCartHover();
+	function loadCartHover() {
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/loadCartHover',
+			method: 'post',
+			success: function(response) {
+				$('.header-top .cart').html(response);
+			}
+		});
+	}
+
+	/* load cart function*/
+	loadCart();
+	function loadCart() {
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/loadCart',
+			method: 'post',
+			success: function(response) {
+				$('.cart-wrapper .cart-container').html(response);
+			}
+		});
+	}
+
+	/* clear cart function*/
+	function clearCart(){
+		if (confirm('Are you sure you want to clear this cart?')) {
+			$.ajax({
+				url: 'http://localhost/DOTShop/Ajax/clearCart',
+			});
+			loadCart();
+			loadCartHover();
+		}
+	}
+
+	/* remove cart function*/
+	function removeCart(productID){
+		if (confirm('Are you sure you want to remove this item?')) {
+			$.ajax({
+				url: 'http://localhost/DOTShop/Ajax/removeCart',
+				method: 'post',
+				data: {
+					productID:productID
+				},
+			});
+			loadCart();
+			loadCartHover();
+		}
+	}
+
+	/* add cart function*/
+	function addCart(productID,quantity,type=1){
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/getSession',
+			method: 'post',
+			success: function(response) {
+				if (response) {
+					var _quantity = quantity;
+					if (type == 2) {
+						_quantity = document.getElementById('quantity').value;
+					}
+					$.ajax({
+						url: 'http://localhost/DOTShop/Ajax/addCart',
+						method: 'post',
+						data: {
+							productID:productID,
+							quantity:_quantity
+						},
+						success: function(response) {
+							if (type == 1){
+								if (response == 1) {
+									alert('Out of quantity. Try another items!');
+								}
+							}
+							else {
+								if (response == 1) {
+									alert('Out of quantity. Try another items!');
+								}
+								else {
+									alert('Add ' + _quantity + ' item(s) success! :D');
+								}
+							}
+						}
+					});
+					loadCartHover();
+				}
+				else {
+					alert('Log in to use :D');
+				}
+			}
+		});
+	}
+
 	/* change active product menu */
 	$('.product-navigation li').click(function(){
 		$(this).addClass('active').siblings().removeClass('active');
@@ -64,16 +198,16 @@
 	/* move image card */
 	$('.add-cart-card').click(function(){
 		$(this).parent().parent().parent().prev().prev().css({'top':'73%','right':'9%','width':'0%','height':'0%','zIndex':'1000','transition':'1s','opacity':'1'});
-		$.post('./Ajax/getSession',function(response){
-			//$('.add-cart-card').parent().parent().parent().prev().prev().css({'top':'73%','right':'9%','width':'0%','height':'0%','zIndex':'1000','transition':'1s'});
-			if (response){
+		// $.post('./Ajax/getSession',function(response){
+		// 	//$('.add-cart-card').parent().parent().parent().prev().prev().css({'top':'73%','right':'9%','width':'0%','height':'0%','zIndex':'1000','transition':'1s'});
+		// 	if (response){
 
-			}
-			else{
-				$('.add-cart-card').parent().parent().parent().prev().prev().css({'zIndex':'0','transition':'0s'});
-				alert('Log in to use this button');
-			}
-		});
+		// 	}
+		// 	else{
+		// 		$('.add-cart-card').parent().parent().parent().prev().prev().css({'zIndex':'0','transition':'0s'});
+		// 		alert('Log in to use this button');
+		// 	}
+		// });
 	});
 	$('.add-cart-card').mouseout(function(){
 		$(this).parent().parent().parent().prev().prev().css({'top':'20%','right':'33%','width':'35%','height':'28%','zIndex':'0','transition':'0s','opacity':'0'});
