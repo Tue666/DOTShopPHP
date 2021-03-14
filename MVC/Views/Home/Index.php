@@ -32,6 +32,9 @@
 				</h5>
 				<?php foreach ($model['listView'] as $item): ?>
 					<div class="product-card">
+						<?php if (isset($_SESSION['VISITED_SESSION'])&&in_array($item['ID'],$_SESSION['VISITED_SESSION'])): ?>
+							<label class="visited">Seen  <i class="fas fa-check-double"></i></label>
+						<?php endif; ?>
 						<label class="hot"><i class="far fa-eye"> <label><?php echo $item['View']; ?></label></i></label>
 						<div class="image-move move">
 							<img src="<?php echo IMAGE_URL.'/'.$item['Image']; ?>" alt="">
@@ -63,7 +66,10 @@
 				</h5>
 				<?php foreach ($model['listHot'] as $item): ?>
 					<div class="product-card">
-						<label class="hot"><i class="fab fa-hotjar"></i> <label>HOT</label></label>
+						<?php if (isset($_SESSION['VISITED_SESSION'])&&in_array($item['ID'],$_SESSION['VISITED_SESSION'])): ?>
+							<label class="visited">Seen  <i class="fas fa-check-double"></i></label>
+						<?php endif; ?>
+						<!-- <label class="hot"><i class="fab fa-hotjar"></i> <label>HOT</label></label> -->
 						<div class="image-move move">
 							<img src="<?php echo IMAGE_URL.'/'.$item['Image']; ?>" alt="">
 						</div>
@@ -94,7 +100,10 @@
 				</h5>
 				<?php foreach ($model['listNew'] as $item): ?>
 					<div class="product-card">
-						<label class="new"><i class="fab fa-battle-net"></i> <label>NEW</label></label>
+						<?php if (isset($_SESSION['VISITED_SESSION'])&&in_array($item['ID'],$_SESSION['VISITED_SESSION'])): ?>
+							<label class="visited">Seen  <i class="fas fa-check-double"></i></label>
+						<?php endif; ?>
+						<!-- <label class="new"><i class="fab fa-battle-net"></i> <label>NEW</label></label> -->
 						<div class="image-move move">
 							<img src="<?php echo IMAGE_URL.'/'.$item['Image']; ?>" alt="">
 						</div>

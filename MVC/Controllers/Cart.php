@@ -1,5 +1,10 @@
 <?php  
 class Cart extends ViewModel{
+	public function __construct(){
+		if (empty($_SESSION['USER_SESSION'])){
+			header('Location:'.BASE_URL.'Login/Index');
+		}
+	}
 	public function Index(){
 		$this->loadView('Shared','Layout',[
 			'page'=>'Cart/Index'

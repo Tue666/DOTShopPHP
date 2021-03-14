@@ -15,6 +15,9 @@
 			<div class="products" style='flew-wrap:wrap;'>
 				<?php foreach ($model['listProduct'] as $item): ?>
 					<div class="product-card <?php echo $item['IDCate']; ?>">
+						<?php if (isset($_SESSION['VISITED_SESSION'])&&in_array($item['ID'],$_SESSION['VISITED_SESSION'])): ?>
+							<label class="visited">Seen  <i class="fas fa-check-double"></i></label>
+						<?php endif; ?>
 						<div class="image-move move">
 							<img src="<?php echo IMAGE_URL.'/'.$item['Image']; ?>" alt="">
 						</div>

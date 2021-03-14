@@ -10,6 +10,21 @@
 		});
 	}
 
+	/* format quantity detail product */
+	$('#quantity').keyup(function(){
+		maxCount = parseInt(document.getElementById('quantity-left').innerHTML);
+		valueCount = parseInt(document.getElementById('quantity').value);
+		if (valueCount < 1){
+			document.getElementById('quantity').value = 1;
+		}
+		if (valueCount > maxCount){
+			document.getElementById('quantity').value = maxCount;
+		}
+		if (document.getElementById('quantity').value == ''){
+			document.getElementById('quantity').value = 1;
+		}
+	});
+
 	/* change quantity*/
 	$('#plus').click(function(){
 		maxCount = parseInt(document.getElementById('quantity-left').innerHTML);
@@ -211,6 +226,67 @@
 	});
 	$('.add-cart-card').mouseout(function(){
 		$(this).parent().parent().parent().prev().prev().css({'top':'20%','right':'33%','width':'35%','height':'28%','zIndex':'0','transition':'0s','opacity':'0'});
+	});
+
+	/* update password function */
+	function updatePassword(){
+		var pass = $('input[id=pass]').val();
+		var newpass = $('input[id=newpass]').val();
+		var confirmnewpass = $('input[id=confirmnewpass]').val();
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/updatePassword',
+			method: 'post',
+			dataType: 'json',
+			data: {
+				pass: pass,
+				newpass: newpass,
+				confirmnewpass: confirmnewpass
+			},
+			success: function(response){
+				$('div[class^="alert-"]').removeClass();
+				$('.account-pass .account-notify').children().addClass('alert-'+response.type+' alert');
+				$('.account-pass .alert').html('<div onclick="closeNotify();" class="close" style="cursor: pointer;font-size:1.2em;">x</div>'+ ((response.type == 'danger')? '<i style="color:red;margin-right:5px;" class="fas fa-times-circle"></i>':'<i style="color:green;margin-right:5px;" class="fas fa-check-circle"></i>') + response.message);
+				$('.account-pass .account-notify').slideDown();
+			}
+		});
+	}
+
+	/* update account function */
+	function updateAccount(){
+		var name = $('input[id=updateName]').val();
+		var email = $('input[id=updateEmail]').val();
+		var phone = $('input[id=updatePhone]').val();
+		var address = $('input[id=updateAddress]').val();
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/updateAccount',
+			method: 'post',
+			data: {
+				name: name,
+				email: email,
+				phone: phone,
+				address: address
+			},
+			success: function(response){
+				if (response){
+					$('.account-infor .account-notify').slideDown();
+					$('html,body').animate({
+						scrollTop:0
+					}, 'slow');
+				}
+			}
+		});
+	}
+
+	/* close notify account function */
+	function closeNotify(){
+		$('.account-notify').slideUp();
+	}
+
+	/* toggle search */
+	$('#toggle-search').on('click',function(){
+		$('.toggle-search').animate({
+			height: 'toggle'
+		}, 'slow');
 	});
 
 	/* toggle account */

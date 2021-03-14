@@ -33,21 +33,14 @@
 				</div>
 				<div class="toggle-account">
 					<div class="account-navigation">
-						<a href="#">
+						<a href="<?php echo BASE_URL; ?>Account/Index">
 							<span></span>
 							<span></span>
 							<span></span>
 							<span></span>
-							Account information
+							Account
 						</a>
-						<a href="#">
-							<span></span>
-							<span></span>
-							<span></span>
-							<span></span>
-							Update Account
-						</a>
-						<a href="#">
+						<a href="<?php echo BASE_URL; ?>Account/UpdatePass">
 							<span></span>
 							<span></span>
 							<span></span>
@@ -61,7 +54,7 @@
 							<span></span>
 							My cart
 						</a>
-						<a href="#">
+						<a href="<?php echo BASE_URL; ?>Account/History">
 							<span></span>
 							<span></span>
 							<span></span>
@@ -109,13 +102,45 @@
 					<span></span>
 					Products
 				</a>
-				<a href="#">
+				<a id="toggle-search" style="cursor:pointer;">
 					<span></span>
 					<span></span>
 					<span></span>
 					<span></span>
 					Search
 				</a>
+				<div class="toggle-search" style="display:none;">
+					<form class="search-form" action="<?php echo BASE_URL; ?>Home/Searching" method="POST">
+						<div class="form-group row" style="width:100%;">
+							<div class="col-sm-12">
+								<input type="text" class="form-control" name="searchName" placeholder="Type product name you want to search here ...">
+							</div>
+						</div>
+						<div class="form-group row col-md-12">
+							<input type="checkbox" class="form-check-input" name="advancedCheck">
+							<label>Advanced searching</label>
+						</div>
+						<div class="form-group row col-md-12">
+							<label class="col-sm-3 col-form-label">Category</label>
+							<div class="col-sm-9">
+								<select class="form-control" name="selectBox">
+									<option selected><label>All</label></option>
+									<option><label>Mobiles</label></option>
+									<option><label>Tablets</label></option>
+									<option><label>Cameras</label></option>
+									<option><label>Laptops</label></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row col-md-12">
+							<label class="col-sm-3 col-form-label">Price</label>
+							<input class="col-sm-4 form-control" type="text" name="priceFrom" value='0' />
+							<label class="col-sm-1 col-form-label">to</label>
+							<input class="col-sm-4 form-control" type="text" name="priceTo" value='10.000.000' />
+						</div>
+						<button class="btn btn-primary" name="searchProduct">Search</button>
+					</form>
+				</div>
 				<a href="#">
 					<span></span>
 					<span></span>

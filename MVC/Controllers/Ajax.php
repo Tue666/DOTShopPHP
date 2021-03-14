@@ -3,6 +3,7 @@ class Ajax extends ViewModel{
 	public function updateView(){
 		$product = $this->getModel('ProductDAL');
 		$product->updateView($_POST['productID']);
+		array_push($_SESSION['VISITED_SESSION'], $_POST['productID']);
 	}
 	public function checkExist(){
 		$account = $this->getModel('AccountDAL');
@@ -18,6 +19,45 @@ class Ajax extends ViewModel{
 		else{
 			echo $_SESSION['USER_SESSION'];
 		}
+	}
+	public function updatePassword(){
+		$account = $this->getModel('AccountDAL');
+		$checkLoginJSON = json_decode($account->checkLogin($_SESSION['USER_SESSION']),true);
+		$pass = $_POST['pass'];
+		$newpass = $_POST['newpass'];
+		$confirmnewpass = $_POST['confirmnewpass'];
+		$message = '';
+		$type = '';
+		if (!empty($pass)&&!empty($newpass)&&!empty($confirmnewpass)){
+			if (password_verify($pass, $checkLoginJSON['PassWord'])){
+				if ($newpass == $confirmnewpass){
+					$account->updatePassword($_SESSION['USER_SESSION'],password_hash($newpass, PASSWORD_DEFAULT));
+					$message = 'Update success :D.';
+					$type = 'success';
+				}
+				else{
+					$message = 'New password are not synchronized :D.';
+					$type = 'danger';
+				}
+			}
+			else{
+				$message = 'Old password is incorrect :D.';
+				$type = 'danger';
+			}
+		}
+		else{
+			$message = 'Fill all the field please :D.';
+			$type = 'danger';
+		}
+		$data = array(
+			'message'=>$message,
+			'type'=>$type
+		);
+		echo json_encode($data);
+	}
+	public function updateAccount(){
+		$account = $this->getModel('AccountDAL');
+		echo $account->updateAccount($_SESSION['USER_SESSION'],$_POST['name'],$_POST['email'],$_POST['phone'],$_POST['address']);
 	}
 	public function loadCartHover() {
 		$output = '';
@@ -99,7 +139,7 @@ class Ajax extends ViewModel{
 	public function loadCart(){
 		if (empty($_SESSION['CART_SESSION'])) {
 			$output = '
-				<img style="width:300px;height:200px;" src="'.IMAGE_URL.'/shop.png" />
+				<img style="width:20%;" src="'.IMAGE_URL.'/shop.png" />
 				<label style="margin:10px;">No items here</label>
 				<button class="btn btn-success" onclick="location.href=\''.BASE_URL.'\'"><i class="fab fa-shopify"></i> Buy more</button>
 			';

@@ -37,5 +37,18 @@ class AccountDAL extends Database{
 		$rows = mysqli_fetch_assoc($result);
 		return json_decode(isset($rows['ID'])?$rows['ID']:0);
 	}
+	public function getAccountByName($userName){
+		$query = "SELECT * FROM account WHERE UserName = '$userName' LIMIT 1";
+		$result = mysqli_query($this->connectionString,$query);
+		return json_encode(mysqli_fetch_assoc($result));
+	}
+	public function updateAccount($userName,$name,$email,$phone,$address){
+		$query = "UPDATE account SET Name = '$name', Email = '$email', Phone = '$phone', Address = '$address' WHERE UserName = '$userName'";
+		return json_encode(mysqli_query($this->connectionString,$query));
+	}
+	public function updatePassword($userName,$passWord){
+		$query = "UPDATE account SET PassWord = '$passWord' WHERE UserName = '$userName'";
+		return json_encode(mysqli_query($this->connectionString,$query));
+	}
 }
 ?>
