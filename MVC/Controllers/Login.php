@@ -5,7 +5,9 @@ class Login extends ViewModel{
 		$this->accounts = $this->getModel('AccountDAL');
 	}
 	public function Index(){
-		$this->loadView('Login','Index');
+		$this->loadView('Login','Index',[
+			'title'=>'Login/Regis',
+		]);
 	}
 	public function Register(){
 		if (isset($_POST['register-btn'])) {
@@ -14,6 +16,7 @@ class Login extends ViewModel{
 			$confirmPassword = $_POST['regis-confirmps'];
 			if ($passWord != $confirmPassword) {
 				$this->loadView('Login','Index',[
+					'title'=>'Login/Regis',
 					'message' => 'Passwords are not synchronized :D',
 					'type' => 'error'
 				]);
@@ -21,6 +24,7 @@ class Login extends ViewModel{
 			else {
 				if (json_decode($this->accounts->checkExist($userName))) {
 					$this->loadView('Login','Index',[
+						'title'=>'Login/Regis',
 						'message' => 'This name is already existed :D',
 						'type' => 'error'
 					]);
@@ -29,12 +33,14 @@ class Login extends ViewModel{
 					$passWord = password_hash($passWord, PASSWORD_DEFAULT);
 					if (json_decode($this->accounts->insertAccount($userName,$passWord))){
 						$this->loadView('Login','Index',[
+							'title'=>'Login/Regis',
 							'message' => 'Register successfully :D',
 							'type' => 'success'
 						]);
 					}
 					else{
 						$this->loadView('Login','Index',[
+							'title'=>'Login/Regis',
 							'message' => 'Register failed :D',
 							'type' => 'error'
 						]);
@@ -51,6 +57,7 @@ class Login extends ViewModel{
 			if ($checkLoginJSON['Status']!=-1){
 				if ($checkLoginJSON['Status']!=1){
 					$this->loadView('Login','Index',[
+						'title'=>'Login/Regis',
 						'message' => 'This account is not activated :D',
 						'type' => 'error'
 					]);
@@ -60,10 +67,16 @@ class Login extends ViewModel{
 						$_SESSION['USER_SESSION'] = $userName;
 						$_SESSION['USER_TYPE_SESSION'] = json_decode($this->accounts->getTypeByName($userName));
 						$_SESSION['VISITED_SESSION'] = array();
-						header('Location:'.BASE_URL);
+						if ($_SESSION['USER_TYPE_SESSION']==0){
+							header('Location:'.BASE_URL);
+						}
+						else{
+							header('Location:'.ADMIN_BASE_URL);
+						}
 					}
 					else{
 						$this->loadView('Login','Index',[
+							'title'=>'Login/Regis',
 							'message' => 'Username or Passwords is incorrect :D',
 							'type' => 'error'
 						]);
@@ -72,6 +85,7 @@ class Login extends ViewModel{
 			}
 			else{
 				$this->loadView('Login','Index',[
+					'title'=>'Login/Regis',
 					'message' => 'Username or Passwords is incorrect :D',
 					'type' => 'error'
 				]);

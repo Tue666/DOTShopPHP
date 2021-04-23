@@ -10,6 +10,7 @@ class Product extends ViewModel{
 		$listCateJSON = json_decode($this->productCategory->getListCate(),true);
 		$listProductJSON = json_decode($this->product->getProduct(),true);
 		$this->loadView('Shared','Layout',[
+			'title'=>'Product',
 			'page'=>'Product/Index',
 			'listCate'=>$listCateJSON,
 			'listProduct'=>$listProductJSON
@@ -19,6 +20,7 @@ class Product extends ViewModel{
 		$productJSON = json_decode($this->product->getProductByID($productID),true);
 		$relatedProductJSON = json_decode($this->product->getRelatedProduct($productJSON['IDCate']),true);
 		$this->loadView('Shared','Layout',[
+			'title'=>$productJSON['ProductName'],
 			'page'=>'Product/Detail',
 			'single'=>$productJSON,
 			'relatedProduct'=>$relatedProductJSON

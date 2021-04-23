@@ -9,5 +9,11 @@ class ProductCategoryDAL extends Database{
 		}
 		return json_encode($array);
 	}
+	public function getIDByCateName($cateName){
+		$query = "SELECT ID FROM productcategory WHERE CateName = '$cateName'";
+		$result = mysqli_query($this->connectionString,$query);
+		$rows = mysqli_fetch_assoc($result);
+		return json_encode($rows['ID']);
+	}
 }
 ?>

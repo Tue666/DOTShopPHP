@@ -4,7 +4,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Trang chủ</title>
+	<title><?php echo $model['title']; ?></title>
+	<link rel="icon" href="<?php echo IMAGE_URL; ?>/icon.png" >
 	<link rel="stylesheet" href="<?php echo CSS_URL; ?>/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -28,7 +29,13 @@
 				<a href="<?php echo BASE_URL; ?>Login/Index">Register</a>
 			<?php else: ?>
 				<div style="display:flex;justify-content:center;align-items:center;">
-					<label style="margin:0;"><?php echo $_SESSION['USER_SESSION']; ?></label>
+					<?php if ($_SESSION['USER_TYPE_SESSION']==1): ?>
+						<i style="color:red;margin-right:5px;" class="fab fa-galactic-senate fa-2x"></i>
+						<label style="margin:0;color:red;font-weight:bold"><?php echo $_SESSION['USER_SESSION']; ?></label>
+					<?php else: ?>
+						<i style="color:red;margin-right:5px;" class="fab fa-studiovinari fa-2x"></i>
+						<label style="margin:0;"><?php echo $_SESSION['USER_SESSION']; ?></label>
+					<?php endif; ?>
 					<i id="toggle-account" style="margin-bottom:4px;margin-left:5px;" class="fas fa-sort-down"></i>
 				</div>
 				<div class="toggle-account">
@@ -149,7 +156,7 @@
 					Contact
 				</a>
 				<?php if (!empty($_SESSION['USER_SESSION']) && $_SESSION['USER_TYPE_SESSION'] == 1): ?>
-					<a id="admin-menu" href="#">
+					<a id="admin-menu" href="<?php echo ADMIN_BASE_URL; ?>">
 						<span></span>
 						<span></span>
 						<span></span>
@@ -166,12 +173,9 @@
 	<!-- header end -->
 
 	<!-- content start -->
-	<?php 
-		if (file_exists('./MVC/Views/'.$model['page'].'.php')){
-			require_once('./MVC/Views/'.$model['page'].'.php');
-		}
-		else{
-			require_once('./MVC/Views/Shared/404.php');
+	<?php
+		if (file_exists($link.$model['page'].'.php')){
+			require_once($link.$model['page'].'.php');
 		}
 	?>
 	<!-- content end -->

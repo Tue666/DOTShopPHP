@@ -10,12 +10,14 @@ class Account extends ViewModel{
 	public function Index(){
 		$accountJSON = json_decode($this->account->getAccountByName($_SESSION['USER_SESSION']),true);
 		$this->loadView('Shared','Layout',[
+			'title'=>'Account',
 			'page'=>'Account/Index',
 			'account'=>$accountJSON
 		]);
 	}
 	public function UpdatePass(){
 		$this->loadView('Shared','Layout',[
+			'title'=>'Update Password',
 			'page'=>'Account/UpdatePass'
 		]);
 	}
@@ -49,6 +51,7 @@ class Account extends ViewModel{
 			array_push($history, $historyItem);
 		}
 		$this->loadView('Shared','Layout',[
+			'title'=>'History',
 			'page'=>'Account/History',
 			'listTransaction'=>$history
 		]);
@@ -68,6 +71,7 @@ class Account extends ViewModel{
 			}
 		}
 		$this->loadView('Shared','Layout',[
+			'title'=>'Purchased',
 			'page'=>'Account/Purchased',
 			'purchased'=>$purchased
 		]);

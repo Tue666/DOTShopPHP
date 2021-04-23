@@ -7,6 +7,7 @@ class Cart extends ViewModel{
 	}
 	public function Index(){
 		$this->loadView('Shared','Layout',[
+			'title'=>'Cart',
 			'page'=>'Cart/Index'
 		]);
 	}
@@ -23,10 +24,12 @@ class Cart extends ViewModel{
 			}
 			unset($_SESSION['CART_SESSION']);
 			$this->loadView('Shared','Layout',[
+				'title'=>'Success',
 				'page'=>'Shared/Success'
 			]);
 		} catch (Exception $e) {
 			$this->loadView('Shared','Layout',[
+				'title'=>'Failed',
 				'page'=>'Shared/Failed'
 			]);
 		}

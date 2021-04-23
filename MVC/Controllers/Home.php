@@ -9,6 +9,7 @@ class Home extends ViewModel{
 		$listNewJSON = json_decode($this->product->getTopNew(8),true);
 		$listViewJSON = json_decode($this->product->getTopView(8),true);
 		$this->loadView('Shared','Layout',[
+			'title'=>'Home',
 			'page'=>'Home/Index',
 			'listHot'=>$listHotJSON,
 			'listNew'=>$listNewJSON,
@@ -29,6 +30,7 @@ class Home extends ViewModel{
 			}
 		}
 		$this->loadView('Shared','Layout',[
+			'title'=>'Search',
 			'page'=>'Home/Searching',
 			'listSearch'=>$productSearchingJSON
 		]);
