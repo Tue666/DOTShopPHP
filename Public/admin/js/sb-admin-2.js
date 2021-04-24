@@ -1,3 +1,40 @@
+/* send feedback function */
+function sendFeedback(feedbackID){
+	var response = $('#responseContact').val();
+	if (response.includes('^')){
+		alert('No character ^');
+	}
+	else{
+		$.ajax({
+			url: 'http://localhost/DOTShop/Admin/Ajax/submitFeedback',
+			method: 'post',
+			data: {
+				feedbackID: feedbackID,
+				response: response
+			},
+			success:function(response){
+				if (response){
+					loadFeedback(feedbackID);
+				}
+			}
+		});
+	}
+}
+
+/* load feedback function */
+function loadFeedback(feedbackID){
+	$.ajax({
+		url: 'http://localhost/DOTShop/Admin/Ajax/loadFeedback',
+		method: 'post',
+		data: {
+			feedbackID: feedbackID
+		},
+		success:function(response){
+			$('#contactInfo').html(response);
+		}
+	});
+}
+
 // remove item admin function | default 0 is users, 1 is products
 function removeItem(type=0){
   var itemID = $('#removeModal input[name="id-remove"]').val();
@@ -31,7 +68,7 @@ function removeItem(type=0){
   });
 }
 
-// switch lock admin function | default 0 is users, 1 is products
+// switch lock admin function | default 0 is users, 1 is products, 2 is feedback
 function switchStatus(ID,type=0){
   $.ajax({
     url: 'http://localhost/DOTShop/Admin/Ajax/switchLock',
@@ -45,7 +82,7 @@ function switchStatus(ID,type=0){
         if (type==0){
           loadUserAdmin();
         }
-        else{
+        else if (type==1){
           loadProductAdmin();
         }
         showToast('Nice','Switched Lock Success! :D',1);

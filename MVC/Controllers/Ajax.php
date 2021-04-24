@@ -5,6 +5,81 @@ class Ajax extends ViewModel{
 		$product->updateView($_POST['productID']);
 		array_push($_SESSION['VISITED_SESSION'], $_POST['productID']);
 	}
+	public function sendFeedback(){
+		$type = 'danger';
+		$message = 'Send failed :D. Something my error, try again.';
+		$contact = $this->getModel('ContactDAL');
+		$account = $this->getModel('AccountDAL');
+		$userID = json_decode($account->getIDByName($_POST['userName']),true);
+		if (json_decode($contact->addFeedback($userID,$_POST['name'],$_POST['email'],$_POST['phone'],$_POST['content']),true)){
+			$type = 'success';
+			$message = 'Send success. Check your history to see the response.';
+		}
+		$data = array(
+			'type'=>$type,
+			'message'=>$message
+		);
+		echo json_encode($data);
+	}
+	public function submitFeedback(){
+		$contact = $this->getModel('ContactDAL');
+		$feedback = json_decode($contact->getFeedbackByID($_POST['feedbackID']),true);
+		$response = $feedback['Content'].'^'.$_POST['response'];
+		if (json_decode($contact->updateContent($_POST['feedbackID'],$response),true)){
+			json_decode($contact->updateResponse($_POST['feedbackID']),true);
+			echo true;
+		}
+		echo false;
+	}
+	public function loadFeedback(){
+		$contact = $this->getModel('ContactDAL');
+		$feedback = json_decode($contact->getFeedbackByID($_POST['feedbackID']),true);
+		$content = explode('^',$feedback['Content']);
+		$output = '<div class="message mb-2" >';
+		$count = 0;
+		foreach ($content as $item){
+			if ($count % 2 == 0){
+				$output .= 
+				'
+				<div class="p-0 mb-3">
+					<div class="p-0 m-0">
+						<label class="m-0 text-secondary">'.$feedback['Name'].'</label>
+					</div>
+					<div class="col-md-12 m-0 user-mess">
+						<label>'.$content[$count].'</label>
+					</div>
+				</div>
+				';
+			}
+			else{
+				$output .= 
+				'
+				<div class="p-0 mb-3">
+					<div class="p-0 m-0 d-flex justify-content-end">
+						<label class="m-0 text-danger">Admin</label>
+					</div>
+					<div class="col-md-12 m-0 admin-mess">
+						<label>'.$content[$count].'</label>
+					</div>
+				</div>
+				';
+			}
+			$count = $count + 1;
+		}
+		$output .= '</div>';
+		if (!$feedback['Response'] && !$feedback['Status']){
+			$output .=
+			'
+			<form>
+            	<textarea class="form-control" id="responseContact" rows="3"></textarea>
+            	<div style="padding:0;display:flex;justify-content:flex-end;">
+                	<a onclick="sendFeedback('.$feedback['ID'].')" title="Send" class="btn btn-primary">Send</a>
+            	</div>      
+        	</form>
+			';
+		}
+		echo $output;
+	}
 	public function checkExist(){
 		$account = $this->getModel('AccountDAL');
 		$userName = $_POST['userName'];

@@ -2,9 +2,11 @@
 class Ajax extends ViewModel{
     public $account;
     public $product;
+    public $contact;
     public function __construct(){
         $this->account = $this->getModel('AccountDAL');
         $this->product = $this->getModel('ProductDAL');
+        $this->contact = $this->getModel('ContactDAL');
     }
     public function loadUserAdmin(){
         $listAccountJSON = json_decode($this->account->getListAccount(),true);
@@ -195,8 +197,11 @@ class Ajax extends ViewModel{
         if ($_POST['type']==0){
             echo json_decode($this->account->switchStatus($_POST['ID']));
         }
-        else{
+        else if ($_POST['type']==1){
             echo json_decode($this->product->switchStatus($_POST['ID']));
+        }
+        else{
+            echo json_decode($this->contact->switchStatus($_POST['ID']));
         }
     }
     public function removeItem(){
@@ -211,5 +216,62 @@ class Ajax extends ViewModel{
         $newPass = password_hash($_POST['newPass'], PASSWORD_DEFAULT);
         echo json_decode($this->account->resetPassword($_POST['id'],$newPass));
     }
+    public function loadFeedback(){
+		$feedback = json_decode($this->contact->getFeedbackByID($_POST['feedbackID']),true);
+		$content = explode('^',$feedback['Content']);
+		$output = '<div class="message mb-2" >';
+		$count = 0;
+		foreach ($content as $item){
+			if ($count % 2 == 0){
+				$output .= 
+				'
+				<div class="p-0 mb-3">
+					<div class="p-0 m-0">
+						<label class="m-0 text-secondary">'.$feedback['Name'].'</label>
+					</div>
+					<div class="col-md-12 m-0 user-mess">
+						<label>'.$content[$count].'</label>
+					</div>
+				</div>
+				';
+			}
+			else{
+				$output .= 
+				'
+				<div class="p-0 mb-3">
+					<div class="p-0 m-0 d-flex justify-content-end">
+						<label class="m-0 text-danger">Admin</label>
+					</div>
+					<div class="col-md-12 m-0 admin-mess">
+						<label>'.$content[$count].'</label>
+					</div>
+				</div>
+				';
+			}
+			$count = $count + 1;
+		}
+		$output .= '</div>';
+		if ($feedback['Response']){
+			$output .=
+			'
+			<form>
+            	<textarea class="form-control" id="responseContact" rows="3"></textarea>
+            	<div style="padding:0;display:flex;justify-content:flex-end;">
+                	<a onclick="sendFeedback('.$feedback['ID'].')" title="Send" class="btn btn-primary">Send</a>
+            	</div>      
+        	</form>
+			';
+		}
+		echo $output;
+	}
+    public function submitFeedback(){
+		$feedback = json_decode($this->contact->getFeedbackByID($_POST['feedbackID']),true);
+		$response = $feedback['Content'].'^'.$_POST['response'];
+		if (json_decode($this->contact->updateContent($_POST['feedbackID'],$response),true)){
+			json_decode($this->contact->updateResponse($_POST['feedbackID']),true);
+			echo true;
+		}
+		echo false;
+	}
 }
 ?>

@@ -10,6 +10,106 @@
 		});
 	}
 
+	/* send feedback function */
+	function sendFeedback(feedbackID){
+		var response = $('#responseContact').val();
+		if (response.includes('^')){
+			alert('No character ^');
+		}
+		else{
+			$.ajax({
+				url: 'http://localhost/DOTShop/Ajax/submitFeedback',
+				method: 'post',
+				data: {
+					feedbackID: feedbackID,
+					response: response
+				},
+				success:function(response){
+					if (response){
+						loadFeedback(feedbackID);
+					}
+				}
+			});
+		}
+	}
+
+	/* load feedback function */
+	function loadFeedback(feedbackID){
+		$.ajax({
+			url: 'http://localhost/DOTShop/Ajax/loadFeedback',
+			method: 'post',
+			data: {
+				feedbackID: feedbackID
+			},
+			success:function(response){
+				$('#contactInfo').html(response);
+			}
+		});
+	}
+
+	// send feedback
+	$('#submitContact').click(function(){
+		if ($('#id-contact').val()!=""){
+			var userName = $('.contact-form #id-contact').val();
+			var name = $('.contact-form input[name="contact-name"]').val();
+			var email = $('.contact-form input[name="contact-email"]').val();
+			var phone = $('.contact-form input[name="contact-phone"]').val();
+			var content = $('.contact-form #contact-area').val();
+			$.ajax({
+				url: 'http://localhost/DOTShop/Ajax/sendFeedback',
+				method: 'post',
+				dataType: 'json',
+				data: {
+					userName: userName,
+					name: name,
+					email: email,
+					phone: phone,
+					content: content
+				},
+				success:function(response){
+					$('div[class^="alert-"]').removeClass();
+					$('.row .account-notify').children().addClass('alert-'+response.type+' alert');
+					$('.row .alert').html('<div onclick="closeNotify();" class="close" style="cursor: pointer;font-size:1.2em;">x</div>'+ ((response.type == 'danger')? '<i style="color:red;margin-right:5px;" class="fas fa-times-circle"></i>':'<i style="color:green;margin-right:5px;" class="fas fa-check-circle"></i>') + response.message);
+					$('.row .account-notify').slideDown();
+				}
+			});
+		}
+		else{
+			alert('Login to send feedback!');
+		}
+	});
+
+	/* route to history page function */
+	function routeToHistory(url){
+		if ($('#id-contact').val()!=""){
+			window.location.href = url;
+		}
+		else{
+			alert('Login to see history!')
+		}
+	}
+
+	/* check fill input contact form */
+	$('.contact-form input[type!="hidden"], #contact-area').keyup(function(){
+		var areEmpty = false;
+		$('.contact-form input[type!="hidden"]').each(function() {
+		  	if ($(this).val() == "") {
+				areEmpty = true;
+		  	}
+		});
+		if (areEmpty){
+		  	$('#submitContact').addClass('disabled');
+		}
+		else{
+			if ($('#contact-area').val()!=""){
+				$('#submitContact').removeClass('disabled');
+			}
+			else{
+				$('#submitContact').addClass('disabled');
+			}
+		}
+	});
+
 	/* format quantity detail product */
 	$('#quantity').keyup(function(){
 		maxCount = parseInt(document.getElementById('quantity-left').innerHTML);

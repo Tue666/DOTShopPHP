@@ -64,6 +64,7 @@ class Login extends ViewModel{
 				}
 				else{
 					if (password_verify($passWord,$checkLoginJSON['PassWord'])) {
+						$_SESSION['USER_ID_SESSION'] = json_decode($this->accounts->getIDByName($userName),true);
 						$_SESSION['USER_SESSION'] = $userName;
 						$_SESSION['USER_TYPE_SESSION'] = json_decode($this->accounts->getTypeByName($userName));
 						$_SESSION['VISITED_SESSION'] = array();

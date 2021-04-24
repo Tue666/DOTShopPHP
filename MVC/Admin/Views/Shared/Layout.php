@@ -105,7 +105,7 @@
 
       <!-- Nav Item - Feedbacks -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="<?php echo ADMIN_BASE_URL; ?>Feedback/Index">
           <i class="fas fa-comment"></i>
           <span>Feedbacks</span></a>
       </li>

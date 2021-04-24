@@ -47,6 +47,50 @@
   box-sizing: border-box;
 }
 
+/* contact black color */
+.container form label,
+.container table label,
+.container .contact-table label,
+.container .contact-table .table-message label {
+	color: #111;
+}
+.container .contact-table .table-message div{
+	padding: 20px;
+	margin:5px;
+}
+.container .contact-table .table-message .message {
+	width: 100%;
+	height: 70%;
+	overflow-y: auto;
+	border-bottom: 1px solid #ddd;
+}
+/* .container .contact-table .table-message .message::-webkit-scrollbar {
+	display: none;
+} */
+.container .contact-table .table-message .message .user-mess {
+	word-break: break-all;
+	box-shadow: 5px 5px 5px #ECE8E7;
+	transition: 0.5s;
+	border-radius: 5px;
+}
+.container .contact-table .table-message .message .user-mess:hover {
+	background-color: #ECE8E7;
+}
+.container .contact-table .table-message .message .admin-mess {
+	word-break: break-all;
+	box-shadow: 5px 5px 10px rgba(255,0,0,.3);
+	transition: 0.5s;
+	border-radius: 5px;
+	background-color: rgba(255,0,0,.3);
+}
+.container .contact-table .table-message .message .admin-mess:hover {
+	background-color: rgba(255,0,0,.5);
+}
+.container .contact-table .table-message .response {
+	width: 100%;
+	height: 10%;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;

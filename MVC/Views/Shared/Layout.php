@@ -148,7 +148,7 @@
 						<button class="btn btn-primary" name="searchProduct">Search</button>
 					</form>
 				</div>
-				<a href="#">
+				<a href="<?php echo BASE_URL; ?>Contact/Index">
 					<span></span>
 					<span></span>
 					<span></span>
@@ -206,9 +206,27 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="<?php echo JS_URL; ?>/layout.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+	<!-- data table bootstrap -->
+	<script>
+		$(document).ready(function() {
+    		$('#dataTable').DataTable();
+		});
+	</script>
 	
 	<!-- owl-carousel -->
 	<script src="<?php echo JS_URL; ?>/owl.carousel.min.js"></script>
+	<script>
+		function myMap() {
+			var mapProp= {
+  				center:new google.maps.LatLng(10.76125, 106.68292),
+  				zoom:9,
+			};
+			var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+		}
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8hqJBEeWT872P0Uvsj-WX5tpUnsWivb0&callback=myMap"></script>
 	<script>
 		
 		$('.owl-carousel').owlCarousel({
