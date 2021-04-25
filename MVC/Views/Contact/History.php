@@ -11,6 +11,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">ID</th>
+                                <th scope="col">Title</th>
                                 <th scope="col">Created Day</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
@@ -19,8 +20,15 @@
                         <tbody>
                             <?php foreach($model['listFeedback'] as $item): ?>
                             <tr>
-                                <td scope="row"><label><?php echo $item['ID']; ?></label></td>
-                                <td><label><?php echo $item['CreatedDay']; ?></label></td>
+                                <?php if(!$item['Response'] && !$item['Status']): ?>
+                                    <td scope="row"><label class="text-danger font-weight-bold"><?php echo $item['ID']; ?></label></td>
+                                    <td style="word-break:break-all;"><label class="text-danger font-weight-bold"><?php echo $item['Title']; ?></label></td>
+                                    <td><label class="text-danger font-weight-bold"><?php echo $item['CreatedDay']; ?></label></td>
+                                <?php else: ?>
+                                    <td scope="row"><label><?php echo $item['ID']; ?></label></td>
+                                    <td style="word-break:break-all;"><label><?php echo $item['Title'] ?></label></td>
+                                    <td><label><?php echo $item['CreatedDay']; ?></label></td>
+                                <?php endif; ?>
                                 <td>
                                     <?php if ($item['Status']): ?>
                                         <label class="text-success font-weight-bold">Success</label>

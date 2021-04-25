@@ -1,9 +1,63 @@
+// change year revenue function
+function changeYear(link){
+  var currentYear = new Date().getFullYear();
+  var year = $('#year').val();
+  if (year<2000||year>currentYear){
+    alert('Year between 200 and ' + currentYear + ' only!');
+  }
+  else{
+    window.location.href = link + year;
+  }
+}
+
+/* order processing function */
+function orderProcessing(orderID,stringProductID,stringAmountQuantity){
+  arrayProductID = stringProductID.split(',');
+  arrayAmountQuantity = stringAmountQuantity.split(',');
+  $.ajax({
+		url: 'http://localhost/DOTShop/Admin/Ajax/orderProcessing',
+		method: 'post',
+		data: {
+			orderID: orderID,
+      arrayProductID: arrayProductID,
+      arrayAmountQuantity: arrayAmountQuantity
+		},
+		success:function(response){
+      if (response){
+        window.history.back();
+        location.reload();
+        showToast('Nice','Switched Success! :D',1);
+      }
+      else{
+        showToast('Oops','Switched Failed! :D',0);
+      }
+		}
+	});
+}
+
+/* load order function */
+function loadOrder(orderID){
+	$.ajax({
+		url: 'http://localhost/DOTShop/Admin/Ajax/loadOrder',
+		method: 'post',
+		data: {
+			orderID: orderID
+		},
+		success:function(response){
+			$('#orderInfo').html(response);
+		}
+	});
+}
+
 /* send feedback function */
 function sendFeedback(feedbackID){
 	var response = $('#responseContact').val();
 	if (response.includes('^')){
 		alert('No character ^');
 	}
+  else if (response == ""){
+    alert('At least 1 character!');
+  }
 	else{
 		$.ajax({
 			url: 'http://localhost/DOTShop/Admin/Ajax/submitFeedback',
@@ -84,6 +138,10 @@ function switchStatus(ID,type=0){
         }
         else if (type==1){
           loadProductAdmin();
+        }
+        else{
+          window.history.back();
+          location.reload();
         }
         showToast('Nice','Switched Lock Success! :D',1);
       }

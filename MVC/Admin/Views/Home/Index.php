@@ -11,8 +11,9 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Users</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">69</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Accounts</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $model['countUser'] + $model['countAdmin']; ?></div>
+                      <div>( <?php echo $model['countAdmin'] ?> Admins - <?php echo $model['countUser'] ?> Users )</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-users fa-2x text-primary"></i>
@@ -28,7 +29,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Products</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">100</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $model['countProduct']; ?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fab fa-product-hunt fa-2x text-success"></i>
@@ -70,8 +71,11 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Feedback</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">9</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Feedbacks</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $model['countContact']; ?></div>
+                      <?php if($model['countUnRead']>0): ?>
+                      <div><label class="text-danger font-weight-bold">( <?php echo $model['countUnRead']; ?> ) unread</label></div>
+                      <?php endif; ?>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-comments fa-2x text-warning"></i>

@@ -16,6 +16,9 @@
 		if (response.includes('^')){
 			alert('No character ^');
 		}
+		else if (response == ""){
+			alert('At least 1 character!');
+		}
 		else{
 			$.ajax({
 				url: 'http://localhost/DOTShop/Ajax/submitFeedback',
@@ -54,6 +57,7 @@
 			var name = $('.contact-form input[name="contact-name"]').val();
 			var email = $('.contact-form input[name="contact-email"]').val();
 			var phone = $('.contact-form input[name="contact-phone"]').val();
+			var title = $('.contact-form input[name="contact-title"]').val();
 			var content = $('.contact-form #contact-area').val();
 			$.ajax({
 				url: 'http://localhost/DOTShop/Ajax/sendFeedback',
@@ -64,6 +68,7 @@
 					name: name,
 					email: email,
 					phone: phone,
+					title: title,
 					content: content
 				},
 				success:function(response){

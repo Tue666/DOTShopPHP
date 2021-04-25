@@ -11,7 +11,7 @@ class Ajax extends ViewModel{
 		$contact = $this->getModel('ContactDAL');
 		$account = $this->getModel('AccountDAL');
 		$userID = json_decode($account->getIDByName($_POST['userName']),true);
-		if (json_decode($contact->addFeedback($userID,$_POST['name'],$_POST['email'],$_POST['phone'],$_POST['content']),true)){
+		if (json_decode($contact->addFeedback($userID,$_POST['name'],$_POST['email'],$_POST['phone'],$_POST['title'],$_POST['content']),true)){
 			$type = 'success';
 			$message = 'Send success. Check your history to see the response.';
 		}
@@ -76,6 +76,14 @@ class Ajax extends ViewModel{
                 	<a onclick="sendFeedback('.$feedback['ID'].')" title="Send" class="btn btn-primary">Send</a>
             	</div>      
         	</form>
+			';
+		}
+		if ($feedback['Status']){
+			$output .=
+			'
+				<div class="d-flex justify-content-center">
+					<label class="text-danger font-weight-bold">The admin has turned off this conversation <i class="fas fa-comment-slash"></i></label>
+				</div>
 			';
 		}
 		echo $output;

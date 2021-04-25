@@ -29,6 +29,10 @@
                         <input type="text" name="contact-phone" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="contact-title" class="form-control">
+                    </div>
+                    <div class="form-group">
                         <label>Content</label>
                         <textarea class="form-control" id="contact-area" rows="3"></textarea>
                     </div>
@@ -42,7 +46,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div id="googleMap" style="width:100%;height:400px;"></div>
+                <div id="map" style="width:100%;height:462px;"></div>
             </div>
         </div>
     </div>

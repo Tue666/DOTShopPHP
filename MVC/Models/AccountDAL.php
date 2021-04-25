@@ -76,5 +76,14 @@ class AccountDAL extends Database{
 		$result = mysqli_query($this->connectionString,$query);
 		return json_encode(mysqli_num_rows($result)>0);
 	}
+	public function countAccount($type){
+		$query = "SELECT ID FROM account WHERE Type = $type";
+		$result = mysqli_query($this->connectionString,$query);
+		$count = 0;
+		while ($rows = mysqli_fetch_assoc($result)){
+			$count = $count + 1;
+		}
+		return json_encode($count);
+	}
 }
 ?>

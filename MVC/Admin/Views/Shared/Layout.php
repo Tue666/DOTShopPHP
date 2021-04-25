@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body id="page-top">
@@ -22,8 +23,8 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo ADMIN_BASE_URL; ?>">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon">
+          <i class="fas fa-jedi"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Dashboard</div>
       </a>
@@ -77,7 +78,7 @@
       </div>
 
       <!-- Nav Item - Slides Menu -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
         <i class="fas fa-sliders-h"></i>
           <span>Slides</span>
@@ -87,20 +88,20 @@
             <a class="collapse-item" href="login.html">Home Slides</a>
           </div>
         </div>
-      </li>
+      </li> -->
 
       <!-- Nav Item - Orders -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="<?php echo ADMIN_BASE_URL; ?>Order/Index">
           <i class="fab fa-jedi-order"></i>
           <span>Orders</span></a>
       </li>
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="<?php echo ADMIN_BASE_URL; ?>Revenue/Index/<?php echo date('Y'); ?>">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
+          <span>Revenue</span></a>
       </li>
 
       <!-- Nav Item - Feedbacks -->
@@ -132,7 +133,7 @@
             <i class="fa fa-bars"></i>
           </button>
           <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
@@ -141,18 +142,18 @@
                 </button>
               </div>
             </div>
-          </form>
+          </form> -->
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <!-- <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
-              </a>
+              </a> -->
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                   <div class="input-group">
                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -164,58 +165,44 @@
                   </div>
                 </form>
               </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">1+</span>
+                <?php if ($model['countUnRead']>0): ?>
+                  <span class="badge badge-danger badge-counter"><?php echo $model['countUnRead']; ?></span>
+                <?php endif; ?>
               </a>
               <!-- Dropdown - Alerts -->
+              <?php if ($model['countUnRead']>0): ?>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
-                  Alerts Center
+                  UNREAD FEEDBACKS
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
+                <?php foreach ($model['listUnRead'] as $item): ?>
+                <a class="dropdown-item d-flex align-items-center" href="<?php ADMIN_BASE_URL; ?>Feedback/Index">
                   <div class="mr-3">
                     <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
+                      <i class="fas fa-comment-dots text-white"></i>
                     </div>
                   </div>
                   <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                    <div class="small text-gray-500"><?php echo $item['Name'].' | ( '.$item['CreatedDay'].' )'; ?></div>
+                    <span class="font-weight-bold">
+                      <?php
+                        $content = explode('^',$item['Content']);
+                        echo end($content);
+                      ?>
+                    </span>
                   </div>
                 </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                <?php endforeach; ?>
+                <a class="dropdown-item text-center small text-gray-500" href="<?php ADMIN_BASE_URL; ?>Feedback/Index">View All Feedback</a>
               </div>
-            </li>
-
-            <!-- Nav Item - Messages -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">4</span>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                  Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>
+              <?php endif; ?>
             </li>
 
             <div class="topbar-divider d-none d-sm-block"></div>
@@ -269,7 +256,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; 9hT 2021</span>
+            <span>Copyright &copy; 9hT <?php echo date('Y'); ?></span>
           </div>
         </div>
       </footer>
@@ -304,11 +291,18 @@
       </div>
     </div>
   </div>
-  
+
   <script>
     //table boostrap
     $(document).ready( function () {
       $('#dataTable').DataTable();
+      $('#contactTable').DataTable({
+        lengthMenu: [ 5, 10, 20, 40, 80 ],
+        order: [[3,'desc']]
+      });
+      $('#orderTable').DataTable({
+        order: [[2,'desc']]
+      });
     });
 
     //tooltip boostrap

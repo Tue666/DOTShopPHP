@@ -9,6 +9,10 @@ class ProductDAL extends Database{
 		$query = "UPDATE product SET Count = Count + 1 WHERE ID = $productID";
 		return json_encode(mysqli_query($this->connectionString,$query));
 	}
+	public function updateQuantity($productID,$amountQuantity){
+		$query = "UPDATE product SET Quantity = Quantity + ($amountQuantity) WHERE ID = $productID";
+		return json_encode(mysqli_query($this->connectionString,$query));
+	}
 	public function insertProduct($productName,$cateID,$description='description',$image,$price,$count=0,$quantity,$warranty,$view=0,$discount,$vatFee=0){
 		$query = "INSERT product VALUES (NULL,'$productName',$cateID,'description','$image',$price,$count,$quantity,$warranty,$view,$discount,$vatFee,NOW(),1)";
 		return json_encode(mysqli_query($this->connectionString,$query));
@@ -44,6 +48,12 @@ class ProductDAL extends Database{
 		$result = mysqli_query($this->connectionString,$query);
 		$rows = mysqli_fetch_assoc($result);
 		return json_encode($rows['ProductName']);
+	}
+	public function getProductImageByID($productID){
+		$query = "SELECT Image FROM product WHERE ID = $productID";
+		$result = mysqli_query($this->connectionString,$query);
+		$rows = mysqli_fetch_assoc($result);
+		return json_encode($rows['Image']);
 	}
 	public function getTopNew($number){
 		$query = "SELECT ID,ProductName,IDCate,Image,Price FROM product WHERE STATUS = true ORDER BY CreatedDay DESC LIMIT $number";
@@ -106,8 +116,17 @@ class ProductDAL extends Database{
 		$result = mysqli_query($this->connectionString,$query);
 		return json_encode(mysqli_num_rows($result)>0);
 	}
+	public function countProduct(){
+		$query = "SELECT ID FROM product";
+		$result = mysqli_query($this->connectionString,$query);
+		$count = 0;
+		while ($rows = mysqli_fetch_assoc($result)){
+			$count = $count + 1;
+		}
+		return json_encode($count);
+	}
 
-	//join table
+	// join table product & productcategory
 	public function getListProduct(){
 		$query = "SELECT product.*, productcategory.CateName FROM product JOIN productcategory WHERE product.IDCate = productcategory.ID";
 		$result = mysqli_query($this->connectionString,$query);

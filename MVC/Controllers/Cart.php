@@ -12,26 +12,31 @@ class Cart extends ViewModel{
 		]);
 	}
 	public function Payment(){
-		$product = $this->getModel('ProductDAL');
-		$account = $this->getModel('AccountDAL');
-		$order = $this->getModel('OrderDAL');
-		$orderDetail = $this->getModel('OrderDetailDAL');
-		try {
-			$orderID = $order->insertOrder(json_decode($account->getIDByName($_SESSION['USER_SESSION'])),$_POST['shipName'],$_POST['shipAddress'],$_POST['shipPhone'],$_POST['shipEmail']);
-			foreach ($_SESSION['CART_SESSION'] as $key => $value) {
-				$orderDetail->insertOrderDetail($orderID,$value['ID'],$value['Quantity'],$value['Price']);
-				$product->updateCount($value['ID']);
+		if (!empty($_SESSION['CART_SESSION'])){
+			$product = $this->getModel('ProductDAL');
+			$account = $this->getModel('AccountDAL');
+			$order = $this->getModel('OrderDAL');
+			$orderDetail = $this->getModel('OrderDetailDAL');
+			try {
+				$orderID = $order->insertOrder(json_decode($account->getIDByName($_SESSION['USER_SESSION'])),$_POST['shipName'],$_POST['shipAddress'],$_POST['shipPhone'],$_POST['shipEmail']);
+				foreach ($_SESSION['CART_SESSION'] as $key => $value) {
+					$orderDetail->insertOrderDetail($orderID,$value['ID'],$value['Quantity'],$value['Price']);
+					$product->updateCount($value['ID']);
+				}
+				unset($_SESSION['CART_SESSION']);
+				$this->loadView('Shared','Layout',[
+					'title'=>'Success',
+					'page'=>'Shared/Success'
+				]);
+			} catch (Exception $e) {
+				$this->loadView('Shared','Layout',[
+					'title'=>'Failed',
+					'page'=>'Shared/Failed'
+				]);
 			}
-			unset($_SESSION['CART_SESSION']);
-			$this->loadView('Shared','Layout',[
-				'title'=>'Success',
-				'page'=>'Shared/Success'
-			]);
-		} catch (Exception $e) {
-			$this->loadView('Shared','Layout',[
-				'title'=>'Failed',
-				'page'=>'Shared/Failed'
-			]);
+		}
+		else{
+			header('Location:'.BASE_URL);
 		}
 	}
 }

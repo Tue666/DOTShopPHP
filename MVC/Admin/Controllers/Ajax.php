@@ -251,7 +251,7 @@ class Ajax extends ViewModel{
 			$count = $count + 1;
 		}
 		$output .= '</div>';
-		if ($feedback['Response']){
+		if ($feedback['Response'] && !$feedback['Status']){
 			$output .=
 			'
 			<form>
@@ -262,6 +262,14 @@ class Ajax extends ViewModel{
         	</form>
 			';
 		}
+        if ($feedback['Status']){
+            $output .=
+            '
+                <div class="d-flex justify-content-center">
+                    <label class="text-danger font-weight-bold">Turned off conversation <i class="fas fa-comment-slash fa-2x"></i></label>
+                </div>
+            ';
+        }
 		echo $output;
 	}
     public function submitFeedback(){
@@ -273,5 +281,108 @@ class Ajax extends ViewModel{
 		}
 		echo false;
 	}
+    public function loadOrder(){
+        $order = $this->getModel('OrderDAL');
+        $orderDetail = $this->getModel('OrderDetailDAL');
+        $orderJSON = json_decode($order->getOrderByID($_POST['orderID']),true);
+        $orderDetailJSON = json_decode($orderDetail->getOrderDetailByOrderID($_POST['orderID']),true);
+        $output = 
+        '
+            <div class="p-0">
+                <label>Name:</label><label class="ml-2 font-weight-bold">'.$orderJSON['CustomerName'].'</label>
+            </div>
+            <div class="p-0">
+                <label>Phone:</label><label class="ml-2 font-weight-bold">'.$orderJSON['CustomerPhone'].'</label>
+            </div>
+            <div class="p-0">
+                <label>Email:</label><label class="ml-2 font-weight-bold">'.$orderJSON['CustomerEmail'].'</label>
+            </div>
+            <div class="p-0">
+                <label>Address:</label><label class="ml-2 font-weight-bold">'.$orderJSON['CustomerAddress'].'</label>
+            </div>
+            <div class="p-0">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        ';
+        $totalPrice = 0;
+        $arrayProductID = array();
+        $arrayAmountQuantity = array();
+        foreach ($orderDetailJSON as $item){
+            $totalPrice = $totalPrice + $item['Price'];
+            $arrayProductID[] = $item['ProductID'];
+            $arrayAmountQuantity[] = $item['Quantity'];
+            $output .=
+            '
+            <tr>
+                <td>'.$item['ProductID'].'</td>
+                <td><img style="width:80px;height:60px;" src="'.IMAGE_URL.'/'.json_decode($this->product->getProductImageByID($item['ProductID']),true).'" /></td>
+                <td>'.json_decode($this->product->getProductNameByID($item['ProductID']),true).'</td>
+                <td>'.$item['Quantity'].'</td>
+                <td>'.number_format($item['Price'],0,'',',').'</td>
+            </tr>
+            ';
+        }
+        $output .=
+        '
+                        <tr>
+                            <td colspan="3"><label class="font-weight-bold">Total price</label></td>
+                            <td colspan="2"><label class="font-weight-bold">'.number_format($totalPrice,0,'',',').' vnđ</label></td>
+                        </tr>
+                    </tbody>
+                </table>
+        ';
+        if ($orderJSON['Status']){
+            $output .= 
+            '
+            <div class="p-0 d-flex justify-content-end">
+                <button onclick="orderProcessing('.$orderJSON['ID'].',\''.implode(',',$arrayProductID).'\',\''.implode(',',$arrayAmountQuantity).'\');" class="btn btn-warning">Processing</button>
+            </div>
+            ';
+        }
+        else{
+            $output .= 
+            '
+            <div class="p-0 d-flex justify-content-end">
+                <button onclick="orderProcessing('.$orderJSON['ID'].',\''.implode(',',$arrayProductID).'\',\''.implode(',',$arrayAmountQuantity).'\');" class="btn btn-success">Accept</button>
+            </div>
+            ';
+        }
+        $output .=
+        '
+            </div>
+        ';
+        echo $output;
+    }
+    public function orderProcessing(){
+        $order = $this->getModel('OrderDAL');
+        $orderJSON = json_decode($order->getOrderByID($_POST['orderID']),true);
+        if (json_decode($order->switchStatus($_POST['orderID']),true)){
+            if ($orderJSON['Status']){
+                $index = 0;
+                foreach ($_POST['arrayProductID'] as $item){
+                    json_decode($this->product->updateQuantity($item,$_POST['arrayAmountQuantity'][$index]),true);
+                    $index = $index + 1;
+                }
+            }
+            else{
+                $index = 0;
+                foreach ($_POST['arrayProductID'] as $item){
+                    json_decode($this->product->updateQuantity($item,($_POST['arrayAmountQuantity'][$index])*(-1)),true);
+                    $index = $index + 1;
+                }
+            }
+            echo true;
+        }
+        echo false;
+    }
 }
 ?>
