@@ -173,7 +173,8 @@ class Ajax extends ViewModel{
         $image = end($linkImage);
         $productCate = $this->getModel('ProductCategoryDAL');
         $cateIDJSON = json_decode($productCate->getIDByCateName($_POST['productCate']),true);
-        if (json_decode($this->product->editProduct($_POST['id'],$_POST['productName'],$cateIDJSON,$_POST['description'],$image,$_POST['price'],$_POST['quantity'],$_POST['warranty'],$_POST['discount'],$_POST['vatfee']),true)){
+        $oldQuantity = json_decode($this->product->getQuantityByID($_POST['id']),true);
+        if (json_decode($this->product->editProduct($_POST['id'],$_POST['productName'],$cateIDJSON,$_POST['description'],$image,$_POST['price'],$oldQuantity,$_POST['quantity'],$_POST['warranty'],$_POST['discount'],$_POST['vatfee']),true)){
             if (!file_exists('Public/images/'.$image)){
                 $fileName = $_FILES['file']['name'];
                 $fileExt = explode('.',$fileName);

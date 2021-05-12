@@ -247,7 +247,7 @@ class Ajax extends ViewModel{
 			$output .= '
 					<div class="action">
 						<button onclick="showCheckOut();" class="btn btn-primary"><i class="fas fa-credit-card"></i> Check Out!</button>
-						<button onclick="clearCart();" class="btn btn-danger"><i class="fas fa-broom"></i> Clear</button>
+						<button onclick="allowClear();" class="btn btn-danger"><i class="fas fa-broom"></i> Clear</button>
 					</div>
 				</div>
 				<div class="cart-detail">
@@ -278,7 +278,7 @@ class Ajax extends ViewModel{
 								</td>
 								<td><label>'.number_format($value['Quantity']*$value['Price'],'0','',',').' đ</label></td>
 								<td>
-									<button onclick="removeCart('.$value['ID'].');" class="btn btn-danger">Remove</button>
+									<button onclick="passDataRemove('.$value['ID'].',\''.$value['Name'].'\');" class="btn btn-danger">Remove</button>
 								</td>
 							</tr>
 				';
